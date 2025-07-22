@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+    <div class="w-screen h-screen flex justify-center items-center">
+        <form action="" id="register-form" class="w-80 flex-col justify-center items-center bg-white shadow-xl p-4 rounded-xl">
+            <div class="w-full flex justify-center items-center">
+                <h1 class="text-4xl text-blue-400">Register</h1>
+            </div>
+            <div class="w-full flex-col justify-center items-center gap-2 my-2">
+                <label for="username" class="block">Username</label>
+                <input type="text" name="username" id="username" class="border-2 px-2 py-1 rounded-lg w-full">
+            </div>
+            <div class="w-full flex-col justify-center items-center gap-2 my-2">
+                <label for="email" class="block">Email</label>
+                <input type="email" name="email" id="email" class="border-2 px-2 py-1 rounded-lg w-full">
+            </div>
+            <div class="w-full flex-col justify-center items-center gap-2 my-2">
+                <label for="password" class="block">Password</label>
+                <input type="password" name="password" id="password" class="border-2 px-2 py-1 rounded-lg w-full">
+            </div>
+            <div class="w-full flex justify-center items-center">
+                <button type="submit" class="px-4 py-2 rounded-md m-3 bg-blue-400 font-medium" id="register-btn">register</button>
+            </div>
+        </form>
+    </div>
+</body>
+<script>
+    const registerForm = document.getElementById("register-form");
+
+    const handleRegister = async (e) => {
+        e.preventDefault();
+
+        const username = document.getElementById("username").value;
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
+        try {
+            const res = await fetch("http://localhost:3000/api/auth/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    username,
+                    email,
+                    password
+                })
+            });
+
+            const data = await res.json();
+            console.log("Response:", data);
+        } catch (err) {
+            console.error("Error:", err);
+        }
+    };
+
+    registerForm.addEventListener("submit", handleRegister);
+</script>
+
+</html>
