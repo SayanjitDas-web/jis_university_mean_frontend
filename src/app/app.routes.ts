@@ -27,7 +27,7 @@ export const routes: Routes = [
         component: RegisterComponent
     },
     {
+
         path:"about",
-        component: AboutComponent
-    }
+        component: AboutComponent}
 ];
