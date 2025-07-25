@@ -1,11 +1,19 @@
 <header class="bg-green-100 shadow-md">
   <div class="max-w-7xl mx-auto flex justify-between items-center p-4">
     <h1 routerLink="/" class="text-2xl font-bold text-green-700 cursor-pointer">VedaBot</h1>
-    <nav class="space-x-4">
-      <button routerLink="/" class="text-green-700 hover:text-green-900 font-medium">Home</button>
-      <button routerLink="/chat" class="text-green-700 hover:text-green-900 font-medium">Chat</button>
-      <button routerLink="/about" class="text-green-700 hover:text-green-900 font-medium">About</button>
-      <button routerLink="/login" class="text-green-700 hover:text-green-900 font-medium">Login</button>
+    @if (isLogedIn()) {
+      <h1 class="text-2xl text-green-700">Hello, {{username()}}</h1>
+      }
+    <nav class="space-x-4 ">
+      <button routerLink="/" class="text-green-700 hover:text-green-900 font-medium cursor-pointer">Home</button>
+      <button routerLink="/chat" class="text-green-700 hover:text-green-900 font-medium cursor-pointer">Chat</button>
+      <!-- <button routerLink="/about" class="text-green-700 hover:text-green-900 font-medium cursor-pointer">About</button> -->
+      @if (isLogedIn()) {
+      <button class="text-green-700 hover:text-green-900 font-medium cursor-pointer" (click)="logout()">LogOut</button>
+      }
+      @else {
+        <button routerLink="/login" class="text-green-700 hover:text-green-900 font-medium cursor-pointer">Login</button>
+      }
     </nav>
   </div>
 </header>

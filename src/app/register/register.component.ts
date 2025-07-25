@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -10,18 +11,21 @@ import { RouterLink } from '@angular/router';
   styleUrl: './register.component.css'
 })
 export class RegisterComponent {
-  name: string = '';
+  username: string = '';
   email: string = '';
   password: string = '';
 
+  constructor(private authService: AuthService, private router: Router) { }
+
   register() {
-
-    console.log('Register clicked', {
-      name: this.name,
-      email: this.email,
-      password: this.password
-    });
-
     // TODO: Add registration logic (e.g., API call)
+    this.authService.getRegisterRes({ username: this.username, email: this.email, password: this.password }).subscribe({
+      next: (res) => {
+        if(res.success){
+          this.router.navigate(["/login"])
+        }
+      },
+      error: (err: Error) => {console.log(err)}
+    })
   }
 }

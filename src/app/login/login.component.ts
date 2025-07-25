@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -10,11 +11,19 @@ import { RouterLink } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
- email: string = '';
+  email: string = '';
   password: string = '';
-
+  constructor(private authService: AuthService,private router: Router){}
   login() {
-    console.log('Login clicked', { email: this.email, password: this.password });
-    // TODO: Add authentication logic here
+   this.authService.getLoginRes({email: this.email, password: this.password}).subscribe({
+    next: (res) => {
+      if(res.success){
+        this.router.navigate(["/chat"])
+      }
+    },
+    error: (err) => {
+      console.log(err)
+    }
+   })
   }
 }
